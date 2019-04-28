@@ -2,10 +2,10 @@
 	// Required.
 	"manifest_version": 2,
 	"name": "Hourglass",
-	"version": "2019.4.21",
+	"version": "2019.4.27",
 
 	// Recommended.
-	//"description": "",
+	"description": "Time made tangible.",
 	//"icons": {...},
 
 	// Pick one (or none).
