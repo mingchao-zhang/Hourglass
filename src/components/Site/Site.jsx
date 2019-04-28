@@ -31,13 +31,13 @@ class Site extends Component {
 
 Site.propTypes = {
 	// URL.
-	url: PropTypes.string.isRequired,
+	url: PropTypes.string,
 	// Time.
-	hour: PropTypes.string.isRequired,
-	minute: PropTypes.string.isRequired,
+	hour: PropTypes.string,
+	minute: PropTypes.string,
 	// Timeline.
-	color: PropTypes.string.isRequired,
-	events: PropTypes.arrayOf(PropTypes.shape({ width: PropTypes.string.isRequired, left: PropTypes.string.isRequired }).isRequired).isRequired
+	color: PropTypes.string,
+	events: PropTypes.arrayOf(PropTypes.shape({ width: PropTypes.string.isRequired, left: PropTypes.string.isRequired }).isRequired)
 };
 
 // For testing. Remove!
@@ -51,5 +51,18 @@ Site.defaultProps = {
 	color: "#EE051155",
 	events: [{ width: "10%", left: "20%" },{ width: "5%", left: "40%" },{ width: "0%", left: "50%" }]
 }
+
+/*
+Site.defaultProps = {
+	// URL.
+	url: "——",
+	// Time.
+	hour: "——",
+	minute: "——",
+	// Timeline.
+	color: "hsla(0, 0, 0, 0)",
+	events: []
+}
+*/
 
 export default Site;
