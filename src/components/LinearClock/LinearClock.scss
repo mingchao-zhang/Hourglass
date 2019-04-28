@@ -1,0 +1,67 @@
+@media only screen and (max-width: 30rem) {
+	.linear_clock {
+		.clock_face {
+			.lines {
+				.minor {
+					visibility: hidden;
+				}
+			}
+		}
+	}
+}
+
+.linear_clock {
+	position: relative;
+	height: 2em;
+
+	#dot {
+		z-index: 100;
+	}
+
+	.clock_face {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.numbers {
+			position: absolute;
+			height: 100%;
+			width: calc(100% + 2em);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			p {
+				width: 2em;
+				text-align: center;
+			}
+		}
+
+		.lines {
+			position: absolute;
+			height: 100%;
+			width: calc(100% + 2*0.03125em);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			p {
+				border-style: solid;
+				border-width: 0 0.03125em;
+				border-radius: 0.03125em;
+				width: 0;
+			}
+
+			.major {
+				height: 0.5em;
+			}
+
+			.minor {
+				height: 0.3em;
+			}
+		}
+	}
+}

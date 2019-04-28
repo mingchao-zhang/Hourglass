@@ -1,7 +1,7 @@
-@import "../Hourglass.scss";
+@import "../../Hourglass.scss";
 
 // Timeline and events.
-$min_half_width: max(0.2rem, $border_radius);
+$min_half_width: max(0.15rem, $border_radius);
 
 // Site.
 .site {
@@ -9,9 +9,9 @@ $min_half_width: max(0.2rem, $border_radius);
 
 	// Site header.
 	.site_header {
+		padding-bottom: 0.5rem;
 		display: flex;
 		justify-content: space-between;
-		padding-bottom: 0.5rem;
 
 		// URL.
 		.url{}
@@ -27,7 +27,7 @@ $min_half_width: max(0.2rem, $border_radius);
 		box-sizing: border-box;
 		border-radius: $border_radius;
 		padding: 0 $min_half_width;
-		height: 1.2rem;
+		height: 1rem;
 		width: 100%;
 
 		// Timeline wrapper.

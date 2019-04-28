@@ -12,4 +12,14 @@
 	.timeline, select, option {
 		background-color: #1A2747;
 	}
+
+	.linear_clock {
+		#dot {
+			background-color: #E3B130;
+
+			p {
+				color: #E8E8E8;
+			}
+		}
+	}
 }

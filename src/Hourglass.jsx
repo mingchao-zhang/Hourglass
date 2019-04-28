@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import 'normalize.css';
 import './Hourglass.scss';
-import './Themes/Day.scss';
-import './Themes/Twilight.scss';
-import './Themes/Night.scss';
+import './themes/Day.scss';
+import './themes/Twilight.scss';
+import './themes/Night.scss';
 import 'typeface-frank-ruhl-libre';
 import 'typeface-spectral';
-import Site from './Components/Site';
+import Site from './components/Site/Site';
+import LinearClock from './components/LinearClock/LinearClock';
 
 class Hourglass extends Component {
 	constructor(props) {
@@ -43,11 +44,9 @@ class Hourglass extends Component {
 		return (
 			<div className="main_wrapper">
 				<header className="main_header">
-					<h1 className="month">{(this.state.date.getMonth() + 1).toString()}</h1>
+					<h1 className="month">{this.state.date.getMonth() + 1}</h1>
 					<h2 className="time">
-						<div className="hour">{this.state.date.toLocaleString(navigator.language, { hour: "numeric" }).replace(/(\D)+/, "")}</div>
-						<div className="colon">:</div>
-						<div className="minute">{this.state.date.toLocaleString(navigator.language, { minute: "2-digit" }).padStart(2, "0")}</div>
+						{this.state.date.toLocaleString(navigator.language, { hour: "numeric", minute: "2-digit" }).replace(/[^0-9:]/g, "").split(/(:+)/).map((elem, i) => (RegExp(/:+/).test(elem)) ? <span key={i} className="colon">{elem}</span> : elem)}
 					</h2>
 				</header>
 
@@ -55,7 +54,7 @@ class Hourglass extends Component {
 					<section>
 						<header className="section_header">
 							<div className="date_day">
-								<h2 className="date">{this.state.date.getDate().toString()}</h2>
+								<h2 className="date">{this.state.date.getDate()}</h2>
 								<h3 className="day">{this.state.date.toLocaleString(navigator.language, { weekday: "short" })}</h3>
 							</div>
 						</header>
@@ -72,18 +71,18 @@ class Hourglass extends Component {
 					<section>
 						<header className="section_header">
 							<div className="date_day">
-								<h2 className="date">{this.offsetDate().getDate().toString()}</h2>
+								<h2 className="date">{this.offsetDate().getDate()}</h2>
 								<h3 className="day">{this.offsetDate().toLocaleString(navigator.language, { weekday: "short" })}</h3>
 							</div>
 
 							<select id="offset" value={this.state.offset} onChange={this.offsetChange}>
-								<option value={1}>1 day ago</option>
-								<option value={2}>2 days ago</option>
-								<option value={3}>3 days ago</option>
-								<option value={4}>4 days ago</option>
-								<option value={5}>5 days ago</option>
-								<option value={6}>6 days ago</option>
-								<option value={7}>7 days ago</option>
+								<option value={1}>1 ← ●</option>
+								<option value={2}>2 ← ●</option>
+								<option value={3}>3 ← ●</option>
+								<option value={4}>4 ← ●</option>
+								<option value={5}>5 ← ●</option>
+								<option value={6}>6 ← ●</option>
+								<option value={7}>7 ← ●</option>
 							</select>
 						</header>
 
@@ -95,6 +94,8 @@ class Hourglass extends Component {
 							<Site color="#8DB255" />
 						</main>
 					</section>
+
+					<LinearClock date={this.state.date}/>
 				</main>
 
 				<footer className="main_footer"></footer>
@@ -103,7 +104,18 @@ class Hourglass extends Component {
 	}
 
 	componentDidMount() {
-		setInterval(this.dateKeeper, 1000);
+		let date = new Date();
+		setTimeout(() => {
+				setInterval(this.dateKeeper, 1000);
+				this.dateKeeper();
+			}, (999 - date.getMilliseconds()));
+		/*
+		date = new Date();
+		setTimeout(() => {
+				setInterval(this.function, 60000);
+				this.function();
+			}, (59 - date.getSeconds())*1000 + (999 - date.getMilliseconds()));
+		*/
 	}
 }
 

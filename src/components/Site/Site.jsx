@@ -8,18 +8,18 @@ class Site extends Component {
 			<div className="site">
 				<header className="site_header">
 					<p className="url">{this.props.url}</p>
-					<div className="time">
-						<p className="hour">{this.props.hour}</p>
-						<p className="colon">:</p>
-						<p className="minute">{this.props.minute.padStart(2, "0")}</p>
-					</div>
+					<p className="time">
+						{this.props.hour}
+						<span className="colon">:</span>
+						{this.props.minute.padStart(2, "0")}
+					</p>
 				</header>
 
 				<main className="timeline">
 					<div className="timeline_wrapper">
 						{
-							this.props.events.map(event => (
-								<div key={event.left} className="event" style={{ width: event.width, left: event.left, backgroundColor: this.props.color }}></div>
+							this.props.events.map((event, i) => (
+								<div key={i} className="event" style={{ width: event.width, left: event.left, backgroundColor: this.props.color }}></div>
 							))
 						}
 					</div>
