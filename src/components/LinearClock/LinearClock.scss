@@ -26,6 +26,12 @@
 		justify-content: center;
 		align-items: center;
 
+		.color {
+			position: absolute;
+			height: 100%;
+			width: calc(100% + 2em);
+		}
+
 		.numbers {
 			position: absolute;
 			height: 100%;

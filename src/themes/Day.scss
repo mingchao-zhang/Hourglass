@@ -15,7 +15,9 @@
 
 	.linear_clock {
 		#dot {
-			background-color: #F2608D;
+			.color {
+				background-color: #F2608D;
+			}
 
 			p {
 				color: #FFFFFF;

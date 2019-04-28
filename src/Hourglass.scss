@@ -14,6 +14,19 @@ div, h1, h2, h3, p, select {
 	font-weight: 400;
 }
 
+// Animations.
+@keyframes fade_in_float_up {
+	from {
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+
+	}
+}
+
 // Text.
 h1, h2 {
 	font-family: $Hiragino_Mincho_ProN, "Frank Ruhl Libre", serif;
@@ -55,6 +68,7 @@ div, p, select {
 	min-height: 100vh;
 	display: flex;
 	justify-content: center;
+	align-items: flex-start;
 	user-select: none;
 }
 
@@ -63,6 +77,8 @@ div, p, select {
 	padding: 0 1.5rem;
 	max-width: $main_wrapper_max_width;
 	width: 100%;
+
+	animation: fade_in_float_up 1s;
 }
 
 // Main header.
