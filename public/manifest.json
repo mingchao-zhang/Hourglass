@@ -25,12 +25,10 @@
 	//"homepage_url": "",
 	"incognito": "not_allowed",
 	"offline_enabled": true,
-	"optional_permissions": [
-		"geolocation"
-	],
 	//"options_page": "options.html",
 	"permissions": [
 		"alarms",
+		"geolocation",
 		"idle",
 		//"notifications",
 		"storage",
