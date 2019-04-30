@@ -4,36 +4,71 @@
 	"name": "Hourglass",
 	"version": "2019.4.27",
 
-	// Recommended.
-	"description": "Time made tangible.",
-	//"icons": {...},
+	// Additional information.
+	/*
+	"icons": {},
+	"description": "",
+	"developer": {
+		"name": "",
+		"url": ""
+	},
 
-	// Pick one (or none).
-	//"browser_action": {...},
+	// Browser specific settings.
+	"browser_specific_settings": {
+		// Require Firefox 67 for "incognito": "not_allowed".
+		"gecko": {
+			"strict_min_version": "67.*"
+		}
+	},
+
+	// Incognito and permissions.
+	"incognito": "not_allowed",
+	"permissions" : [
+		"alarms",
+		"geolocation",
+		"idle",
+		"storage",
+		"tabs",
+		"unlimitedStorage"
+	],
+	"optional_permissions": [],
+
+	// Options page.
+	"options_page": "options.html",
+
+	// Scripts.
+	"background": {
+		"scripts": [
+			"background.js"
+		]
+	},
+	"content_scripts": [],
+
+	// Actions.
+	"browser_action": {},
+
+	// URL overrides.
+	"chrome_url_overrides": {
+		"newtab": "index.html"
+	}
+	*/
 
 	// Optional.
 	"background": {
 		"scripts": [
 			"background.js"
-		],
-		// Recommended.
-		"persistent": false
+		]
 	},
 	"chrome_url_overrides": {
 		"newtab": "index.html"
 	},
-	//"homepage_url": "",
-	"incognito": "not_allowed",
-	"offline_enabled": true,
-	//"options_page": "options.html",
+	
 	"permissions": [
 		"alarms",
 		"geolocation",
 		"idle",
-		//"notifications",
 		"storage",
 		"tabs",
 		"unlimitedStorage"
 	]
-	//"update_url": ""
 }
