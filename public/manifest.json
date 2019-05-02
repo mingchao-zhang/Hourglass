@@ -69,6 +69,8 @@
 		"idle",
 		"storage",
 		"tabs",
-		"unlimitedStorage"
+		"unlimitedStorage",
+		// For testing if certain listeners fire on browser startup.
+		"notifications"
 	]
 }
