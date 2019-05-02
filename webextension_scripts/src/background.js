@@ -1,25 +1,14 @@
 import browser from "webextension-polyfill";
 
-var currentTab;
-(async function() {
-	browser.tabs.query({active: true, lastFocusedWindow: true})
-		.then(result => {
-			browser.notifications.create("startup", {type: "basic", iconUrl: "icon.png", title: "Startup", message: "Startup tabId: " + result[0].id.toString()});
-		})
-		.then(() => {
-			browser.notifications.create("poststartup", {type: "basic", iconUrl: "icon.png", title: "Post-Startup", message: ""});
-		})
-})();
-
-/*
-(async function() {
-	await browser.tabs.query({active: true, lastFocusedWindow: true}, (result) => {
-		currentTab = result[0].id;
+var buffer;
+browser.tabs.query({active: true, lastFocusedWindow: true})
+	.then(result => {
+		browser.notifications.create("startup", {type: "basic", iconUrl: "icon.png", title: "Startup", message: "Startup tabId: " + result[0].id.toString()});
+	})
+	.then(() => {
+		browser.notifications.create("poststartup", {type: "basic", iconUrl: "icon.png", title: "Post-Startup", message: ""});
 	});
-	browser.notifications.create("startup", {type: "basic", iconUrl: "icon.png", title: "Startup", message: "Startup tabId: " + currentTab.toString()});
-	browser.notifications.create("boogiepop", {type: "basic", iconUrl: "icon.png", title: "Startup", message: "Boogiepop"});
-})();
-*/
+
 // Testing.
 /*
 // Triggers when the active tab in ANY window is changed.

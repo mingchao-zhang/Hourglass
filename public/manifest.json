@@ -42,7 +42,6 @@
 			"background.js"
 		]
 	},
-	"content_scripts": [],
 
 	// Actions.
 	"browser_action": {},
