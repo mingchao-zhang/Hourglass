@@ -1,12 +1,12 @@
-var path = require('path');
+var path = require("path");
 
 module.exports = {
-	mode: 'production',
+	mode: "production",
 	entry: {
 		background: "./src/background.js"
 	},
 	output: {
-		path: path.resolve(__dirname, '../build'),
-		filename: '[name].js'
+		path: path.resolve(__dirname, "../build"),
+		filename: "[name].js"
 	}
 };
