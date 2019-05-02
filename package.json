@@ -1,0 +1,30 @@
+{
+  "name": "hourglass",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "node-sass": "^4.12.0",
+    "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8",
+    "typeface-frank-ruhl-libre": "0.0.72",
+    "typeface-spectral": "0.0.72"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && cd webextension_scripts && npm run build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

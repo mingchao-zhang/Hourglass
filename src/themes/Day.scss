@@ -1,0 +1,27 @@
+.day_theme {
+	background-color: #FFFFFF;
+
+	h1, h2, h3 {
+		color: #000000;
+	}
+
+	p, select, option {
+		color: #8F8F8F;
+	}
+
+	.timeline, select, option {
+		background-color: #FAFAFA;
+	}
+
+	.linear_clock {
+		#dot {
+			.color {
+				background-color: #F2608D;
+			}
+
+			p {
+				color: #FFFFFF;
+			}
+		}
+	}
+}

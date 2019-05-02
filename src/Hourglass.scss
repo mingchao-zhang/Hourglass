@@ -1,0 +1,150 @@
+// Hiragino Mincho ProN typeface stack.
+$Hiragino_Mincho_ProN: "ヒラギノ明朝 ProN", "Hiragino Mincho ProN";
+
+// Main wrapper max width.
+$main_wrapper_max_width: 42rem;
+
+// Border radius.
+$border_radius: 0.15rem;
+
+// Additional resets to normalize.css.
+div, h1, h2, h3, p, select {
+	margin: 0;
+	line-height: 1;
+	font-weight: 400;
+}
+
+// Animations.
+@keyframes fade_in_float_up {
+	from {
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+
+	}
+}
+
+// Text.
+h1, h2 {
+	font-family: $Hiragino_Mincho_ProN, "Frank Ruhl Libre", serif;
+}
+
+h3, p, select {
+	font-family: $Hiragino_Mincho_ProN, "Spectral", serif;
+}
+
+h1 {
+	font-size: 6.4rem;
+}
+
+h2 {
+	font-size: 1.4rem;
+}
+
+h3 {
+	font-size: 1.2rem;
+}
+
+div, p, select {
+	font-size: 1rem;
+}
+
+// Pretty time.
+.time {
+	display: flex;
+
+	// Colon.
+	.colon {
+		position: relative;
+		bottom: 0.1em;
+	}
+}
+
+// Hourglass.
+#Hourglass {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	user-select: none;
+}
+
+// Main wrapper.
+.main_wrapper {
+	padding: 0 1.5rem;
+	max-width: $main_wrapper_max_width;
+	width: 100%;
+
+	animation: fade_in_float_up 1s;
+}
+
+// Main header.
+.main_header {
+	position: relative;
+	padding-top: 1rem;
+	padding-bottom: 0.4rem;
+	display: flex;
+	justify-content: center;
+
+	// Month.
+	.month {}
+
+	// Time.
+	.time {
+		position: absolute;
+		bottom: 2rem;
+		right: 0;
+	}
+}
+
+// Main footer.
+.main_footer {}
+
+// Section.
+section {
+	padding-bottom: 0.5rem;
+}
+
+// Section header.
+.section_header {
+	padding-bottom: 0.7rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	// Date + day.
+	.date_day {
+		display: flex;
+		align-items: baseline;
+
+		// Date.
+		.date {
+			padding-right: 0.8rem;
+		}
+
+		// Day.
+		.day {}
+	}
+}
+
+// Select.
+select {
+	border: none;
+	border-radius: $border_radius;
+	padding: 0.2rem 1em;
+	cursor: pointer;
+	appearance: none;
+}
+
+select:focus {
+	outline: none;
+}
+
+// Footer.
+.main_footer {
+	padding-top: 1rem;
+	padding-bottom: 1rem; 
+}
