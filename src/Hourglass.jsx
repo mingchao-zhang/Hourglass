@@ -17,15 +17,15 @@ class Hourglass extends Component {
 			date: new Date(),
 			offset: 1,
 			timeline: Array(5).fill({
-				url_hostname: "",
-				hour: "0",
-				minute: "00",
+				url_hostname: undefined,
+				hour: undefined,
+				minute: undefined,
 				events: []
 			}, 0, 5),
 			offset_timeline: Array(5).fill({
-				url_hostname: "",
-				hour: "0",
-				minute: "00",
+				url_hostname: undefined,
+				hour: undefined,
+				minute: undefined,
 				events: []
 			}, 0, 5)
 		};

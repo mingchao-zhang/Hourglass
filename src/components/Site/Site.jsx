@@ -7,9 +7,9 @@ class Site extends Component {
 		return (
 			<div className="site">
 				<header className="site_header">
-					<p className="url">{this.props.url}</p>
+					<p className="url">{this.props.url.replace(/^w+\d*\./,"")}</p>
 					<p className="time">
-						{this.props.hour}
+						{this.props.hour.padStart(1, "0")}
 						<span className="colon">:</span>
 						{this.props.minute.padStart(2, "0")}
 					</p>

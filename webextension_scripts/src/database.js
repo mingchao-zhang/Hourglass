@@ -61,36 +61,41 @@ export function dateEvents(date) {
 			Object.keys(timeline).forEach(site => {
 				timeline[site] = timeline[site].map(event => {
 					return {
-						width: (event.end - event.begin)/(24*60*60*10),
-						left: (event.begin - date_begin)/(24*60*60*10)
+						width: (event.end - event.begin)/(24*60*60*10).toString() + "%",
+						left: (event.begin - date_begin)/(24*60*60*10).toString() + "%"
 					}
 				});
 			});
+
+			let duration_obj = duration.reduce((acc, cur) => {
+				acc[cur[0]] = cur[1];
+				return acc;
+			}, {});
 
 			// Return the final array.
 			let result = [];
 			duration.slice(0, 3).map(cur => cur[0]).forEach(site => {
 				result.push(Object.create({
 					url_hostname: site,
-					hour: Math.floor(duration[site]/(1000*60*60)),
-					minute: Math.round((duration[site] % (1000*60*60))/(1000*60)),
+					hour: Math.floor(duration_obj[site]/(1000*60*60)).toString(),
+					minute: Math.round((duration_obj[site] % (1000*60*60))/(1000*60)).toString(),
 					events: timeline[site]
 				}));
 			});
 			visits.slice(0, 2).map(cur => cur[0]).forEach(site => {
 				result.push(Object.create({
 					url_hostname: site,
-					hour: Math.floor(duration[site]/(1000*60*60)),
-					minute: Math.round((duration[site] % (1000*60*60))/(1000*60)),
+					hour: Math.floor(duration_obj[site]/(1000*60*60)).toString(),
+					minute: Math.round((duration_obj[site] % (1000*60*60))/(1000*60)).toString(),
 					events: timeline[site]
 				}));
 			});
 
 			while (result.length < 5) {
 				result.push(Object.create({
-					url_hostname: "",
-					hour: "0",
-					minute: "00",
+					url_hostname: undefined,
+					hour: undefined,
+					minute: undefined,
 					events: []
 				}));
 			}
