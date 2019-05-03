@@ -88,11 +88,11 @@ class Hourglass extends Component {
 						</header>
 
 						<main>
-							<Site color="#F7665A" url={this.state.timeline[0].url_hostname} hour={this.state.timeline[0].hour} minte={this.state.timeline[0].minute} events={this.state.timeline[0].events} />
-							<Site color="#8D608C" url={this.state.timeline[1].url_hostname} hour={this.state.timeline[1].hour} minte={this.state.timeline[1].minute} events={this.state.timeline[1].events} />
-							<Site color="#FFB95A" url={this.state.timeline[2].url_hostname} hour={this.state.timeline[2].hour} minte={this.state.timeline[2].minute} events={this.state.timeline[2].events} />
-							<Site color="#4D8FAC" url={this.state.timeline[3].url_hostname} hour={this.state.timeline[3].hour} minte={this.state.timeline[3].minute} events={this.state.timeline[3].events} />
-							<Site color="#8DB255" url={this.state.timeline[4].url_hostname} hour={this.state.timeline[4].hour} minte={this.state.timeline[4].minute} events={this.state.timeline[4].events} />
+							<Site color="#F7665A" url={this.state.timeline[0].url_hostname} hour={this.state.timeline[0].hour} minute={this.state.timeline[0].minute} events={this.state.timeline[0].events} />
+							<Site color="#8D608C" url={this.state.timeline[1].url_hostname} hour={this.state.timeline[1].hour} minute={this.state.timeline[1].minute} events={this.state.timeline[1].events} />
+							<Site color="#FFB95A" url={this.state.timeline[2].url_hostname} hour={this.state.timeline[2].hour} minute={this.state.timeline[2].minute} events={this.state.timeline[2].events} />
+							<Site color="#4D8FAC" url={this.state.timeline[3].url_hostname} hour={this.state.timeline[3].hour} minute={this.state.timeline[3].minute} events={this.state.timeline[3].events} />
+							<Site color="#8DB255" url={this.state.timeline[4].url_hostname} hour={this.state.timeline[4].hour} minute={this.state.timeline[4].minute} events={this.state.timeline[4].events} />
 						</main>
 					</section>
 
@@ -115,11 +115,11 @@ class Hourglass extends Component {
 						</header>
 
 						<main>
-							<Site color="#F7665A" url={this.state.offset_timeline[0].url_hostname} hour={this.state.offset_timeline[0].hour} minte={this.state.offset_timeline[0].minute} events={this.state.offset_timeline[0].events} />
-							<Site color="#8D608C" url={this.state.offset_timeline[1].url_hostname} hour={this.state.offset_timeline[1].hour} minte={this.state.offset_timeline[1].minute} events={this.state.offset_timeline[1].events} />
-							<Site color="#FFB95A" url={this.state.offset_timeline[2].url_hostname} hour={this.state.offset_timeline[2].hour} minte={this.state.offset_timeline[2].minute} events={this.state.offset_timeline[2].events} />
-							<Site color="#4D8FAC" url={this.state.offset_timeline[3].url_hostname} hour={this.state.offset_timeline[3].hour} minte={this.state.offset_timeline[3].minute} events={this.state.offset_timeline[3].events} />
-							<Site color="#8DB255" url={this.state.offset_timeline[4].url_hostname} hour={this.state.offset_timeline[4].hour} minte={this.state.offset_timeline[4].minute} events={this.state.offset_timeline[4].events} />
+							<Site color="#F7665A" url={this.state.offset_timeline[0].url_hostname} hour={this.state.offset_timeline[0].hour} minute={this.state.offset_timeline[0].minute} events={this.state.offset_timeline[0].events} />
+							<Site color="#8D608C" url={this.state.offset_timeline[1].url_hostname} hour={this.state.offset_timeline[1].hour} minute={this.state.offset_timeline[1].minute} events={this.state.offset_timeline[1].events} />
+							<Site color="#FFB95A" url={this.state.offset_timeline[2].url_hostname} hour={this.state.offset_timeline[2].hour} minute={this.state.offset_timeline[2].minute} events={this.state.offset_timeline[2].events} />
+							<Site color="#4D8FAC" url={this.state.offset_timeline[3].url_hostname} hour={this.state.offset_timeline[3].hour} minute={this.state.offset_timeline[3].minute} events={this.state.offset_timeline[3].events} />
+							<Site color="#8DB255" url={this.state.offset_timeline[4].url_hostname} hour={this.state.offset_timeline[4].hour} minute={this.state.offset_timeline[4].minute} events={this.state.offset_timeline[4].events} />
 						</main>
 					</section>
 

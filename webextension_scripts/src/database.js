@@ -78,7 +78,7 @@ export function dateEvents(date) {
 				result.push(Object.create({
 					url_hostname: site,
 					hour: Math.floor(duration_obj[site]/(1000*60*60)).toString(),
-					minute: Math.round((duration_obj[site] % (1000*60*60))/(1000*60)).toString(),
+					minute: Math.floor((duration_obj[site] % (1000*60*60))/(1000*60)).toString(),
 					events: timeline[site]
 				}));
 			});
@@ -86,7 +86,7 @@ export function dateEvents(date) {
 				result.push(Object.create({
 					url_hostname: site,
 					hour: Math.floor(duration_obj[site]/(1000*60*60)).toString(),
-					minute: Math.round((duration_obj[site] % (1000*60*60))/(1000*60)).toString(),
+					minute: Math.floor((duration_obj[site] % (1000*60*60))/(1000*60)).toString(),
 					events: timeline[site]
 				}));
 			});
