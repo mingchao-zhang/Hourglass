@@ -40,29 +40,15 @@ Site.propTypes = {
 	events: PropTypes.arrayOf(PropTypes.shape({ width: PropTypes.string.isRequired, left: PropTypes.string.isRequired }).isRequired)
 };
 
-// For testing. Remove!
 Site.defaultProps = {
 	// URL.
-	url: "site.jp",
+	url: "",
 	// Time.
-	hour: "8",
-	minute: "07",
+	hour: "",
+	minute: "",
 	// Timeline.
-	color: "#EE051155",
-	events: [{ width: "10%", left: "20%" },{ width: "5%", left: "40%" },{ width: "0%", left: "50%" }]
-}
-
-/*
-Site.defaultProps = {
-	// URL.
-	url: "——",
-	// Time.
-	hour: "——",
-	minute: "——",
-	// Timeline.
-	color: "hsla(0, 0, 0, 0)",
+	color: "hsl(0, 0, 0)",
 	events: []
 }
-*/
 
 export default Site;

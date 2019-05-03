@@ -8,18 +8,32 @@ import 'typeface-frank-ruhl-libre';
 import 'typeface-spectral';
 import Site from './components/Site/Site';
 import LinearClock from './components/LinearClock/LinearClock';
+import {dateEvents} from './database.js';
 
 class Hourglass extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			date: new Date(),
-			offset: 1
+			offset: 1,
+			timeline: Array(5).fill({
+				url_hostname: "",
+				hour: "0",
+				minute: "00",
+				events: []
+			}, 0, 5),
+			offset_timeline: Array(5).fill({
+				url_hostname: "",
+				hour: "0",
+				minute: "00",
+				events: []
+			}, 0, 5)
 		};
 
 		this.dateKeeper = this.dateKeeper.bind(this);
 		this.offsetChange = this.offsetChange.bind(this);
 		this.offsetDate = this.offsetDate.bind(this);
+		this.calculateTimeline = this.calculateTimeline.bind(this);
 	}
 
 	dateKeeper() {
@@ -38,6 +52,20 @@ class Hourglass extends Component {
 		let date = new Date(this.state.date);
 		date.setDate(date.getDate() - this.state.offset);
 		return date;
+	}
+
+	async calculateTimeline() {
+		// Update the state.
+		this.setState({
+			timeline: await dateEvents(this.state.date),
+			offset_timeline: await dateEvents(this.offsetDate())
+		});
+	}
+
+	componentDidUpdate (prevProps, prevState) {
+		if (prevState.offset !== this.state.offset) {
+			this.calculateTimeline();
+		}	
 	}
 
 	render() {
@@ -60,11 +88,11 @@ class Hourglass extends Component {
 						</header>
 
 						<main>
-							<Site color="#F7665A" />
-							<Site color="#8D608C" />
-							<Site color="#FFB95A" />
-							<Site color="#4D8FAC" />
-							<Site color="#8DB255" />
+							<Site color="#F7665A" url={this.state.timeline[0].url_hostname} hour={this.state.timeline[0].hour} minte={this.state.timeline[0].minute} events={this.state.timeline[0].events} />
+							<Site color="#8D608C" url={this.state.timeline[1].url_hostname} hour={this.state.timeline[1].hour} minte={this.state.timeline[1].minute} events={this.state.timeline[1].events} />
+							<Site color="#FFB95A" url={this.state.timeline[2].url_hostname} hour={this.state.timeline[2].hour} minte={this.state.timeline[2].minute} events={this.state.timeline[2].events} />
+							<Site color="#4D8FAC" url={this.state.timeline[3].url_hostname} hour={this.state.timeline[3].hour} minte={this.state.timeline[3].minute} events={this.state.timeline[3].events} />
+							<Site color="#8DB255" url={this.state.timeline[4].url_hostname} hour={this.state.timeline[4].hour} minte={this.state.timeline[4].minute} events={this.state.timeline[4].events} />
 						</main>
 					</section>
 
@@ -87,11 +115,11 @@ class Hourglass extends Component {
 						</header>
 
 						<main>
-							<Site color="#F7665A" />
-							<Site color="#8D608C" />
-							<Site color="#FFB95A" />
-							<Site color="#4D8FAC" />
-							<Site color="#8DB255" />
+							<Site color="#F7665A" url={this.state.offset_timeline[0].url_hostname} hour={this.state.offset_timeline[0].hour} minte={this.state.offset_timeline[0].minute} events={this.state.offset_timeline[0].events} />
+							<Site color="#8D608C" url={this.state.offset_timeline[1].url_hostname} hour={this.state.offset_timeline[1].hour} minte={this.state.offset_timeline[1].minute} events={this.state.offset_timeline[1].events} />
+							<Site color="#FFB95A" url={this.state.offset_timeline[2].url_hostname} hour={this.state.offset_timeline[2].hour} minte={this.state.offset_timeline[2].minute} events={this.state.offset_timeline[2].events} />
+							<Site color="#4D8FAC" url={this.state.offset_timeline[3].url_hostname} hour={this.state.offset_timeline[3].hour} minte={this.state.offset_timeline[3].minute} events={this.state.offset_timeline[3].events} />
+							<Site color="#8DB255" url={this.state.offset_timeline[4].url_hostname} hour={this.state.offset_timeline[4].hour} minte={this.state.offset_timeline[4].minute} events={this.state.offset_timeline[4].events} />
 						</main>
 					</section>
 
@@ -109,13 +137,12 @@ class Hourglass extends Component {
 				setInterval(this.dateKeeper, 1000);
 				this.dateKeeper();
 			}, (999 - date.getMilliseconds()));
-		/*
+		this.calculateTimeline();
 		date = new Date();
 		setTimeout(() => {
-				setInterval(this.function, 60000);
-				this.function();
+				setInterval(this.calculateTimeline, 60000);
+				this.calculateTimeline();
 			}, (59 - date.getSeconds())*1000 + (999 - date.getMilliseconds()));
-		*/
 	}
 }
 
