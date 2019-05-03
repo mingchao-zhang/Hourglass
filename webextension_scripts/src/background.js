@@ -2,7 +2,8 @@ import browser from 'webextension-polyfill';
 import { getHostname } from './service/util';
 import db from './service/db.js';
 
-let COMPLETE = 'complete';
+const COMPLETE = 'complete';
+const ACTIVE = 'active';
 const ONE_SECOND = 1000;
 
 let activeTab = new Map(); // [ tabId : hostname ]
@@ -33,7 +34,7 @@ browser.tabs.onActivated.addListener((activeInfo) => {
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	console.log("=== onUpdated ===");
-	//console.log(tab.highlighted);
+	
 	if (changeInfo.status === COMPLETE && tab.highlighted) {
 		let beginTime = new Date();
 		let endTime = new Date();
@@ -52,7 +53,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 					}		
 				}
 			}
-		})
+		});
 	}
 });
 
@@ -78,7 +79,28 @@ browser.windows.onFocusChanged.addListener((windowId) => {
 			} else {
 				stopInterval();
 			}
-		})
+		});
+	}
+})
+
+browser.idle.onStateChanged.addListener((newState) => {
+	console.log(newState);
+	let endTime = new Date();
+	if (newState === ACTIVE) {
+		browser.windows.getLastFocused({ populate: true }).then(windowInfo => {
+			if (windowInfo.focused) {
+				let activeTab = windowInfo.tabs.filter(tab => tab.active)[0];
+				let tabId = activeTab.id;
+				let hostname = getHostname(activeTab.url);
+				if (hostname !== null) {
+					initInterval(tabId, hostname, endTime, endTime);
+				} else {
+					stopInterval();
+				}
+			}
+		});
+	} else {
+		stopInterval();
 	}
 })
 
