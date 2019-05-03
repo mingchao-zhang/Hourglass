@@ -9,9 +9,12 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "suncalc": "^1.8.0",
     "typeface-frank-ruhl-libre": "0.0.72",
-    "typeface-spectral": "0.0.72"
+    "typeface-spectral": "0.0.72",
+    "webextension-polyfill": "^0.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

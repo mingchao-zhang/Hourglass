@@ -9,6 +9,8 @@ import 'typeface-spectral';
 import Site from './components/Site/Site';
 import LinearClock from './components/LinearClock/LinearClock';
 import {dateEvents} from './database.js';
+import browser from 'webextension-polyfill';
+import SunCalc from 'suncalc';
 
 class Hourglass extends Component {
 	constructor(props) {
@@ -27,13 +29,22 @@ class Hourglass extends Component {
 				hour: undefined,
 				minute: undefined,
 				events: []
-			}, 0, 5)
+			}, 0, 5),
+			latitude: 0,
+			longitude: 0
 		};
+
+		browser.storage.local.get(["latitude", "longitude"])
+			.then(result => {
+				this.state.latitude = result.latitude;
+				this.state.longitude = result.longitude;
+			});
 
 		this.dateKeeper = this.dateKeeper.bind(this);
 		this.offsetChange = this.offsetChange.bind(this);
 		this.offsetDate = this.offsetDate.bind(this);
 		this.calculateTimeline = this.calculateTimeline.bind(this);
+		this.updateTheme = this.updateTheme.bind(this);
 	}
 
 	dateKeeper() {
@@ -62,10 +73,33 @@ class Hourglass extends Component {
 		});
 	}
 
+	updateTheme() {
+		this.setState({
+			SunCalc: SunCalc.getTimes(this.state.date, this.state.latitude, this.state.longitude)
+		});
+		let hourglass = document.getElementById("Hourglass");
+		// Night.
+		if (this.state.date > this.state.SunCalc.nauticalDusk && this.state.date <= this.state.SunCalc.nauticalDawn) {
+			hourglass.className = "night_theme";
+		}
+		// Twilight (morning).
+		else if (this.state.date > this.state.SunCalc.nauticalDawn && this.state.date <= this.state.SunCalc.sunriseEnd) {
+			hourglass.className = "twilight_theme";
+		}
+		// Day.
+		else if (this.state.date > this.state.sunriseEnd && this.state.date <= this.state.sunsetStart) {
+			hourglass.className = "day_theme";
+		}
+		// Twilight (evening).
+		else if (this.state.date > this.state.SunCalc.sunsetStart && this.state.date <= this.state.SunCalc.nauticalDusk) {
+			hourglass.className = "twilight_theme";
+		}
+	}
+
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.offset !== this.state.offset) {
 			this.calculateTimeline();
-		}	
+		}
 	}
 
 	render() {
@@ -134,15 +168,27 @@ class Hourglass extends Component {
 	componentDidMount() {
 		let date = new Date();
 		setTimeout(() => {
-				setInterval(this.dateKeeper, 1000);
-				this.dateKeeper();
-			}, (999 - date.getMilliseconds()));
+			setInterval(this.dateKeeper, 1000);
+			this.dateKeeper();
+		}, (999 - date.getMilliseconds()));
 		this.calculateTimeline();
 		date = new Date();
 		setTimeout(() => {
-				setInterval(this.calculateTimeline, 60000);
-				this.calculateTimeline();
-			}, (59 - date.getSeconds())*1000 + (999 - date.getMilliseconds()));
+			setInterval(this.updateTheme, 60000);
+			setInterval(this.calculateTimeline, 60000);
+			this.updateTheme();
+			this.calculateTimeline();
+		}, (59 - date.getSeconds())*1000 + (999 - date.getMilliseconds()));
+		browser.storage.onChanged.addListener((changes, areaName) => {
+			if (areaName === "local") {
+				if (changes.latitude) {
+					this.setState({latitude: changes.latitude.newValue});
+				}
+				if (changes.longitude) {
+					this.setState({longitude: changes.longitude.newValue});
+				}
+			}
+		});
 	}
 }
 

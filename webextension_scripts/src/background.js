@@ -2,6 +2,22 @@ import browser from "webextension-polyfill";
 import db from "./database.js";
 
 /*
+	Store geolocation constantly for fast Suncalc lookups.
+*/
+navigator.geolocation.getCurrentPosition(position => {
+	browser.storage.local.set({
+		latitude: position.latitude,
+		longitude: position.longitude
+	})
+});
+navigator.geolocation.watchPosition(position => {
+	browser.storage.local.set({
+		latitude: position.latitude,
+		longitude: position.longitude
+	})
+});
+
+/*
 	User browsing history is saved in a Timeline, a collection of Events.
 
 	An Event is a period of time spent at a specific site. Sites are identified by their URL's hostname.
@@ -77,8 +93,7 @@ browser.alarms.create("autodelete", {periodInMinutes: 1440});
 */
 
 function Write_Event_Buffer(date, url = {}) {
-	// Reduce date/time precision to 1 minute.
-	date.setSeconds(0);
+	// Reduce date/time precision to 1 second.
 	date.setMilliseconds(0);
 	// If the Event buffer's site is NOT undefined:
 	if (event_buffer.url_hostname !== undefined) {
