@@ -17,7 +17,7 @@ class Hourglass extends Component {
 			date: new Date(),
 			offset: 1,
 			today_data: [],
-			yesterday_data: [],
+			prev_data: []
 		};
 
 		this.dateKeeper = this.dateKeeper.bind(this);
@@ -44,8 +44,7 @@ class Hourglass extends Component {
 		return date;
 	}
 
-	sort_intervals(data) {
-		//console.log(48, data)
+	sort_intervals(data, is_today_data) {
 		function fromTimestampToValue(timestamp) {
 			var delta = timestamp / 1000;
 	
@@ -130,16 +129,23 @@ class Hourglass extends Component {
 			each_map["events"] = get_intervals(data, key)
 			new_arr.push(each_map)
 		}
-		this.setState({today_data: new_arr})
-		console.log("new_arr", new_arr)
+
+		if (is_today_data) {
+			this.setState({today_data: new_arr})
+		}
+		else {
+			this.setState({prev_data: new_arr})
+		}
 	}
 
 
 	render() {
-		let listSites = this.state.today_data.map((data) => 
+		let firstListSites = this.state.today_data.map((data) => 
 		 	<Site url={data.url} hour={data.hour} minute={data.minute} color={data.color} events={data.events} />
 		)
-		console.log(listSites)
+		let secondListSites = this.state.prev_data.map((data) => 
+		 	<Site url={data.url} hour={data.hour} minute={data.minute} color={data.color} events={data.events} />
+		)
 		return (
 			<div className="main_wrapper">
 				<header className="main_header">
@@ -158,19 +164,8 @@ class Hourglass extends Component {
 							</div>
 						</header>
 
-						<main id="today_log">
-						{listSites}
-						
-							{/*<Site url="test.com"
-									hour="18" 
-									minute= "07"
-									
-									color= "#EE051155" 
-									events= {[{ width: "40%", left: "0%" },{ width: "5%", left: "45%" },{ width: "5%", left: "90%" }]} />
-							<Site color="#8D608C" />
-							<Site color="#FFB95A" />
-							<Site color="#4D8FAC" />
-		<Site color="#8DB255" />*/}
+						<main>
+						{firstListSites}
 						</main>
 					</section>
 
@@ -193,12 +188,7 @@ class Hourglass extends Component {
 						</header>
 
 						<main>
-
-							{/* <Site color="#F7665A" />
-							<Site color="#8D608C" />
-							<Site color="#FFB95A" />
-							<Site color="#4D8FAC" />
-							<Site color="#8DB255" /> */}
+							{secondListSites}
 						</main>
 					</section>
 
@@ -228,11 +218,11 @@ class Hourglass extends Component {
 			db.time.put({ hostname: hostname, begin: begin, end: end })
 		}
 
-		function getTimeEntry() {
-			var curr_date = new Date()
-			var rv = []
+		function getTimeEntry(date) {
+			var rv =[]
+			var queryDate = new Date(date)
 			return  db.time.filter(function(data) {
-						return data.begin.toDateString() === curr_date.toDateString()
+						return data.begin.toDateString() === queryDate.toDateString()
 					})
 					.each(function(data) {
 					  rv.push(data)
@@ -241,22 +231,34 @@ class Hourglass extends Component {
 					  return rv
 					})		
 		}
-
-		//this.sort_intervals([1,2,3])
+		// func is a copy is this.sort_intervals
 		var func = this.sort_intervals
-		const time_interval = 1000
+		//const ms_one_day = 1000 * 60 * 60 * 24
+		
+		function update_page() {
+			var first_date = new Date()
+			var first_rv = getTimeEntry(first_date)
+				first_rv.then((data) =>{
+					func(data, true)
+			})
+			
+			let offset = document.getElementById("offset").value
+			let second_date = first_date
+			second_date.setDate(second_date.getDate() - parseInt(offset));
+			let second_rv = getTimeEntry(second_date)
+				second_rv.then((data) =>{
+					func(data, false)
+			})
+			
+		}
+		//var begin = new Date('2019/05/01 03:00:05');
+		//var end = new Date('2019/05/01 05:04:05');
+		//insertNewTimeData("test1.com", begin, end)
+		update_page()
+			
 
-		var first_rv = getTimeEntry()
-			first_rv.then((data) =>{
-				func(data)
-			})
-	
-		setInterval(function() {
-			var rv = getTimeEntry()
-			rv.then((data) =>{
-				func(data)
-			})
-		  }, time_interval)
+		const time_interval = 1000 // * 5
+		setInterval(update_page, time_interval)
 	}
 }
 
