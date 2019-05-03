@@ -5,52 +5,52 @@
 	"version": "2019.4.27",
 
 	// Additional information.
-	/*
-	"icons": {},
-	"description": "",
-	"developer": {
-		"name": "",
-		"url": ""
-	},
+	// /*
+	// "icons": {},
+	// "description": "",
+	// "developer": {
+	// 	"name": "",
+	// 	"url": ""
+	// },
 
-	// Browser specific settings.
-	"browser_specific_settings": {
-		// Require Firefox 67 for "incognito": "not_allowed".
-		"gecko": {
-			"strict_min_version": "67.*"
-		}
-	},
+	// // Browser specific settings.
+	// "browser_specific_settings": {
+	// 	// Require Firefox 67 for "incognito": "not_allowed".
+	// 	"gecko": {
+	// 		"strict_min_version": "67.*"
+	// 	}
+	// },
 
-	// Incognito and permissions.
-	"incognito": "not_allowed",
-	"permissions" : [
-		"alarms",
-		"geolocation",
-		"idle",
-		"storage",
-		"tabs",
-		"unlimitedStorage"
-	],
-	"optional_permissions": [],
+	// // Incognito and permissions.
+	// "incognito": "not_allowed",
+	// "permissions" : [
+	// 	"alarms",
+	// 	"geolocation",
+	// 	"idle",
+	// 	"storage",
+	// 	"tabs",
+	// 	"unlimitedStorage"
+	// ],
+	// "optional_permissions": [],
 
-	// Options page.
-	"options_page": "options.html",
+	// // Options page.
+	// "options_page": "options.html",
 
-	// Scripts.
-	"background": {
-		"scripts": [
-			"background.js"
-		]
-	},
+	// // Scripts.
+	// "background": {
+	// 	"scripts": [
+	// 		"background.js"
+	// 	]
+	// },
 
-	// Actions.
-	"browser_action": {},
+	// // Actions.
+	// "browser_action": {},
 
-	// URL overrides.
-	"chrome_url_overrides": {
-		"newtab": "index.html"
-	}
-	*/
+	// // URL overrides.
+	// "chrome_url_overrides": {
+	// 	"newtab": "index.html"
+	// }
+	// */
 
 	// Optional.
 	"background": {
