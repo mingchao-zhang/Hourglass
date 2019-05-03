@@ -245,6 +245,12 @@ class Hourglass extends Component {
 		//this.sort_intervals([1,2,3])
 		var func = this.sort_intervals
 		const time_interval = 1000
+
+		var first_rv = getTimeEntry()
+			first_rv.then((data) =>{
+				func(data)
+			})
+	
 		setInterval(function() {
 			var rv = getTimeEntry()
 			rv.then((data) =>{
