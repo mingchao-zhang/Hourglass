@@ -41,6 +41,7 @@ Site.propTypes = {
 };
 
 // For testing. Remove!
+/*
 Site.defaultProps = {
 	// URL.
 	url: "site.jp",
@@ -51,7 +52,7 @@ Site.defaultProps = {
 	color: "#EE051155",
 	events: [{ width: "10%", left: "20%" },{ width: "5%", left: "40%" },{ width: "0%", left: "50%" }]
 }
-
+*/
 /*
 Site.defaultProps = {
 	// URL.
