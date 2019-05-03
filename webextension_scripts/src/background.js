@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill";
-import dexie from "dexie";
+import db from "./database.js";
 
 /*
 	User browsing history is saved in a Timeline, a collection of Events.
@@ -36,6 +36,25 @@ var event_buffer = {
 };
 
 /*
+	Autodelete browsing history older than 9 days old.
+
+	1.	Save the current date/time - 9 days.
+	2.	Delete browsing history older than 9 days old.
+*/
+
+function autodelete() {
+	// Save the current date/time - 9 days.
+	let date = new Date();
+	date.setDate(date.getDate() - 9);
+	// Delete browsing history older than 9 days old.
+	db.Timeline.where("end").below(date).delete();
+}
+
+// Delete browsing history on browser startup and set an alarm.
+autodelete();
+browser.alarms.create("autodelete", {periodInMinutes: 1440});
+
+/*
 	Write the Event buffer to the Timeline.
 
 	Parameters:
@@ -65,7 +84,7 @@ function Write_Event_Buffer(date, url = {}) {
 	if (event_buffer.url_hostname !== undefined) {
 		// Write the Event buffer to the Timeline.
 		event_buffer.end = date;
-
+		db.Timeline.put(event_buffer);
 	}
 	// If the new site's scheme matches:
 	if (schemes.includes(url.protocol)) {
@@ -74,7 +93,7 @@ function Write_Event_Buffer(date, url = {}) {
 		event_buffer.begin = date;
 		event_buffer.end = date;
 		// Write the Event buffer to the Timeline.
-
+		db.Timeline.put(event_buffer);
 		// Create the autosave alarm.
 		browser.alarms.create("autosave", {periodInMinutes: 1});
 	}
@@ -91,9 +110,12 @@ function Write_Event_Buffer(date, url = {}) {
 	Alarms:
 	autosave
 		Autosave the user's browsing history.
+	autodelete
+		Autodelete browsing history older than 9 days old.
 */
 
 browser.alarms.onAlarm.addListener(alarmInfo => {
+	// autosave
 	if (alarmInfo.name === "autosave") {
 		/*
 			Autosave the user's browsing history. Assume the browser is in focus and the URL scheme matches.
@@ -111,20 +133,13 @@ browser.alarms.onAlarm.addListener(alarmInfo => {
 				let url = new URL(tabs[0].url);
 				// Call the Write_Event_Buffer function.
 				Write_Event_Buffer(date, url);
-
-				// Debug.
-				browser.notifications.create("Autosave", {
-					type: "basic",
-					iconUrl: "icon.png",
-					title: "Autosave.",
-					message: event_buffer.url_hostname || "undefined"
-				});
 			});
 	}
+	// autodelete
+	if (alarmInfo.name === "autodelete") {
+		autodelete();
+	}
 });
-
-// Open the database.
-
 
 /*
 	When the system's state changes.
@@ -146,17 +161,6 @@ browser.idle.onStateChanged.addListener((newState) => {
 			if (windowInfo.focused) {
 				// If the system is locked:
 				if (newState === "locked") {
-
-					// Debug.
-					if (event_buffer.url_hostname !== undefined) {
-						browser.notifications.create("Site changed from system state change", {
-							type: "basic",
-							iconUrl: "icon.png",
-							title: "Site changed from system changing from idle/active to locked.",
-							message: event_buffer.url_hostname || "undefined"
-						});
-					}
-
 					// Call the Write_Event_Buffer function sans url.
 					Write_Event_Buffer(date);
 				}
@@ -167,14 +171,6 @@ browser.idle.onStateChanged.addListener((newState) => {
 					if (url.hostname !== event_buffer.url_hostname) {
 						// Call the Write_Event_Buffer function.
 						Write_Event_Buffer(date, url);
-
-						// Debug.
-						browser.notifications.create("Site changed from system state change", {
-							type: "basic",
-							iconUrl: "icon.png",
-							title: "Site changed from system changing from locked to active, idle to active, or active to idle.",
-							message: event_buffer.url_hostname || "undefined"
-						});
 					}
 				}
 			}
@@ -197,9 +193,6 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
 	let date = new Date();
 	// Check if the update is a URL change (i.e. a potential site change).
 	if (changeInfo.url) {
-		// Debug.
-		console.log(changeInfo.url);
-
 		// Check if the system is unlocked.
 		browser.idle.queryState(60)
 			.then(newState => {
@@ -215,14 +208,6 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
 									if (url.hostname !== event_buffer.url_hostname) {
 										// Call the Write_Event_Buffer function.
 										Write_Event_Buffer(date, url);
-
-										// Debug.
-										browser.notifications.create("Site changed in active tab", {
-											type: "basic",
-											iconUrl: "icon.png",
-											title: "Site changed in active tab.",
-											message: event_buffer.url_hostname || "undefined"
-										});
 									}
 								}
 							}
@@ -260,14 +245,6 @@ browser.tabs.onActivated.addListener(activeInfo => {
 								if (url.hostname !== event_buffer.url_hostname) {
 									// Call the Write_Event_Buffer function.
 									Write_Event_Buffer(date, url);
-
-									// Debug.
-									browser.notifications.create("Site changed from tab switch", {
-										type: "basic",
-										iconUrl: "icon.png",
-										title: "Site changed from tab switch.",
-										message: event_buffer.url_hostname || "undefined"
-									});
 								}
 							}
 						}
@@ -299,14 +276,6 @@ browser.windows.onFocusChanged.addListener(windowId => {
 				if (windowId === browser.windows.WINDOW_ID_NONE) {
 					// Call the Write_Event_Buffer function sans url.
 					Write_Event_Buffer(date);
-
-					// Debug.
-					browser.notifications.create("Site changed from browser defocus", {
-						type: "basic",
-						iconUrl: "icon.png",
-						title: "Site changed from browser defocus or devtools focus.",
-						message: event_buffer.url_hostname || "undefined"
-					});
 				}
 				// If there is a browser window:
 				else {
@@ -318,14 +287,6 @@ browser.windows.onFocusChanged.addListener(windowId => {
 							if (url.hostname !== event_buffer.url_hostname) {
 								// Call the Write_Event_Buffer function.
 								Write_Event_Buffer(date, url);
-
-								// Debug.
-								browser.notifications.create("Site changed from browser focus", {
-									type: "basic",
-									iconUrl: "icon.png",
-									title: "Site changed from browser focus.",
-									message: event_buffer.url_hostname || "undefined"
-								});
 							}
 						});
 				}
