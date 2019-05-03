@@ -16,8 +16,8 @@ class Hourglass extends Component {
 		this.state = {
 			date: new Date(),
 			offset: 1,
-			today_data: [null, null, null, null, null],
-			yesterday_data: [null, null, null, null, null],
+			today_data: [],
+			yesterday_data: [],
 		};
 
 		this.dateKeeper = this.dateKeeper.bind(this);
@@ -118,26 +118,28 @@ class Hourglass extends Component {
 		var new_arr = []
 		var color_arr = ["#F7665A", "#8D608C", "#FFB95A", "#4D8FAC", "#8DB255"]
 		var color_index = 0
-		console.log("top_keys.length: ", top_keys.length)
 		for (var i=0; i < top_keys.length; i++) {
 			
 			key = top_keys[i]
 			var each_map = {}
 			each_map["url"] = key 
 			var h_and_m = fromTimestampToValue(map.get(key))
-			each_map["hour"] = h_and_m.hours
-			each_map["minute"] = h_and_m.minutes
+			each_map["hour"] = h_and_m.hours.toString()
+			each_map["minute"] = h_and_m.minutes.toString()
 			each_map["color"] = color_arr[color_index++] 
 			each_map["events"] = get_intervals(data, key)
-			console.log(key, each_map)
 			new_arr.push(each_map)
 		}
 		this.setState({today_data: new_arr})
-		console.log(106, new_arr)
+		console.log("new_arr", new_arr)
 	}
 
 
 	render() {
+		let listSites = this.state.today_data.map((data) => 
+		 	<Site url={data.url} hour={data.hour} minute={data.minute} color={data.color} events={data.events} />
+		)
+		console.log(listSites)
 		return (
 			<div className="main_wrapper">
 				<header className="main_header">
@@ -157,14 +159,15 @@ class Hourglass extends Component {
 						</header>
 
 						<main id="today_log">
+						{listSites}
 						
-							<Site url="test.com"
+							{/*<Site url="test.com"
 									hour="18" 
 									minute= "07"
 									
 									color= "#EE051155" 
 									events= {[{ width: "40%", left: "0%" },{ width: "5%", left: "45%" },{ width: "5%", left: "90%" }]} />
-							{/*<Site color="#8D608C" />
+							<Site color="#8D608C" />
 							<Site color="#FFB95A" />
 							<Site color="#4D8FAC" />
 		<Site color="#8DB255" />*/}
@@ -213,10 +216,6 @@ class Hourglass extends Component {
 				setInterval(this.dateKeeper, 1000);
 				this.dateKeeper();
 			}, (999 - date.getMilliseconds()));
-		setInterval(function() {
-			console.log(document.getElementById("today_log"))
-			console.log("setInt")
-		}, 1000 * 60)
 		/*
 		date = new Date();
 		setTimeout(() => {
