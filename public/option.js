@@ -1,34 +1,56 @@
+// urls is an array of urls
+function render_page(urls) {
+  var html = ""
+  for (var i=0; i < urls.length; i++) {
+    url = urls[i]
+    html += "<li><p>" + url + "</p>"
+    html += "<button id=" + url + " class='delete_button'" + ">Delete</button></li>"
+  }
+  $("#blacklist_wrapper").html(html)
+}
 
+//render page at the beginning
+$(function () {
+  chrome.storage.sync.get(['blacklist'], function (result) {
+    render_page(result.blacklist)
+  })
+})
+
+// add a new url
 document.querySelector("form").addEventListener("submit", (evt) => {
-  // evt.preventDefault();
-  var url = document.querySelector("input[name=url]").value;
+  var url = document.querySelector("input[name=url]").value
   if (url !== undefined && url != null && url !== "") {
     chrome.storage.sync.get(['blacklist'], function (result) {
-      console.log(result);
       let list = result.blacklist;
-      console.log(list);
       if (list === undefined) {
         list = []
       }
-      list.push(url)
-      chrome.storage.sync.set({ 'blacklist': list }, function () {
-        console.log("Value is set to ");
-        console.log(list);
-      });
-    });
-  } else {
-    console.log("url is empty");
+      else {
+        list.push(url)
+      }
+      chrome.storage.sync.set({ 'blacklist': list }, function() {
+        render_page(list)
+      })
+    })
   }
-});
+})
 
-
-$(function () {
+//delete an url 
+$(document).on("click", ".delete_button", function(event) {
+  const id = event.target.id 
+  console.log(id)
   chrome.storage.sync.get(['blacklist'], function (result) {
-    console.log(result);
-    let arr = result.blacklist;
-    arr.forEach(element => {
-      $("#existing_blacklist ul").append($("<li>").text(element).addClass(element));
-      $("#existing_blacklist ul").append($("<button>").text("Delete").addClass(element));
-    });
-  });
-});
+    let list = []
+    for (var i=0; i < result.blacklist.length; i++) {
+      url = result.blacklist[i] 
+      if (url != id) {
+        list.push(url)
+      }
+    }
+    console.log(list)
+    chrome.storage.sync.set({ 'blacklist': list }, function() {
+      render_page(list)
+    })
+  })
+})
+
