@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body> 
+        <form>
+            <div class="form-group">
+                <label>Add a new url to your blacklist</label>
+                <input name="url">
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" type="submit">Add</button>
+            </div>
+        </form>
+
+        <div id="existing_blacklist">
+            <label>Current urls in you blacklist</label>
+            <ul id="blacklist_wrapper">
+            </ul>
+        </div>
+
+        <script src="option.js"></script> 
+    </body>         
+</html>

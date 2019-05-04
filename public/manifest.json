@@ -33,7 +33,7 @@
 	],
 
 	// Options page.
-	//"options_page": "options.html",
+	"options_page": "options.html",
 
 	// Scripts.
 	"background": {
@@ -48,5 +48,8 @@
 	// URL overrides.
 	"chrome_url_overrides": {
 		"newtab": "index.html"
-	}
+	},
+
+	// CSP overrides for development.
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://ajax.googleapis.com; object-src 'self'"
 }
