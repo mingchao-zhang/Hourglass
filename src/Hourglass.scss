@@ -27,6 +27,11 @@ div, h1, h2, h3, p, select {
 	}
 }
 
+// Transitions.
+* {
+	transition: color 1s, background-color 1s;
+}
+
 // Text.
 h1, h2 {
 	font-family: $Hiragino_Mincho_ProN, "Frank Ruhl Libre", serif;

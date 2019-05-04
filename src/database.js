@@ -1,0 +1,1 @@
+../webextension_scripts/src/database.js
