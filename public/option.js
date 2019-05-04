@@ -15,6 +15,7 @@ function reformat_url(url) {
   // split by "/" and take the first word
   words = url.split("/")
   // remove "www." to keep the same format as that of the frontend
+  /*
   if (words[0][1] === "w" && 
       words[0][1] === "w" && 
       words[0][2] === "w" && 
@@ -24,8 +25,11 @@ function reformat_url(url) {
   else {
     return words[0]
   } 
+  */
+  return words[0]
 }
 
+console.log("in option.js")
 //render page at the beginning
 $(function () {
   chrome.storage.sync.get(['blacklist'], function (result) {
@@ -68,4 +72,3 @@ $(document).on("click", ".delete_button", function(event) {
     })
   })
 })
-

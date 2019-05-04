@@ -1,5 +1,5 @@
 import Dexie from "dexie";
-
+import chrome from "webextension-polyfill";
 // Create an instance.
 const db = new Dexie("Hourglass");
 
@@ -24,9 +24,34 @@ export function dateEvents(date) {
 	let date_begin = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
 	let date_end = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
 	// Find all of the Events which overlap with the specified date.
-	return db.Timeline.filter(event => {return ((event.begin <= date_end && event.end >= date_begin) ? true : false)})
-		// Store the timeline.
-		.toArray(timeline => {
+	var blacklist = null
+	return db.Timeline.filter(event => {
+			if (!blacklist) {
+				chrome.storage.sync.get("blacklist").then(result => {
+						blacklist = new Set(result.blacklist)
+						console.log(blacklist)
+						console.log(event.url_hostname, !blacklist.has(event.url_hostname))
+						if ((event.begin <= date_end && event.end >= date_begin) &&
+							!blacklist.has(event.url_hostname)) {
+							return true
+						}
+						else {
+							return false
+						}
+					})
+			}
+			else {
+				console.log(event.url_hostname, !blacklist.has(event.url_hostname))
+				if ((event.begin <= date_end && event.end >= date_begin) &&
+					!blacklist.has(event.url_hostname)) {
+					return true
+				}
+				else {
+					return false
+				}
+			}	
+		})
+		.toArray(timeline => { // Store the timeline.
 			// Truncate the Events that extend beyond the specified date.
 			timeline.forEach(event => {
 				event.begin = (event.begin < date_begin) ? date_begin : event.begin;
