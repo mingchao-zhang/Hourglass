@@ -9,6 +9,23 @@ function render_page(urls) {
   $("#blacklist_wrapper").html(html)
 }
 
+function reformat_url(url) {
+  // delete "http://" or "https://""
+  url = url.replace(/(^\w+:|^)\/\//, '')
+  // split by "/" and take the first word
+  words = url.split("/")
+  // remove "www." to keep the same format as that of the frontend
+  if (words[0][1] === "w" && 
+      words[0][1] === "w" && 
+      words[0][2] === "w" && 
+      words[0][3] === ".") {
+    return words[0].slice(4)
+  }
+  else {
+    return words[0]
+  } 
+}
+
 //render page at the beginning
 $(function () {
   chrome.storage.sync.get(['blacklist'], function (result) {
@@ -25,9 +42,7 @@ document.querySelector("form").addEventListener("submit", (evt) => {
       if (list === undefined) {
         list = []
       }
-      else {
-        list.push(url)
-      }
+      list.push(reformat_url(url))
       chrome.storage.sync.set({ 'blacklist': list }, function() {
         render_page(list)
       })
