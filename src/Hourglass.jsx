@@ -87,7 +87,7 @@ class Hourglass extends Component {
 			hourglass.className = "twilight_theme";
 		}
 		// Day.
-		else if (this.state.date > this.state.sunriseEnd && this.state.date <= this.state.sunsetStart) {
+		else if (this.state.date > this.state.SunCalc.sunriseEnd && this.state.date <= this.state.SunCalc.sunsetStart) {
 			hourglass.className = "day_theme";
 		}
 		// Twilight (evening).
