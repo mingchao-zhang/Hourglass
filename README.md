@@ -1,6 +1,6 @@
 # CS498RK Final Project
 
-## Group member
+## Group members
 Kevin Su(kys2), Junyoung Kim(jk23), Mingchao Zhang(mz5), Cheng Hu(chenghu3)
 
 ## Design
