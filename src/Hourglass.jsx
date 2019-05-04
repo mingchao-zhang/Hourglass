@@ -79,7 +79,7 @@ class Hourglass extends Component {
 		});
 		let hourglass = document.getElementById("Hourglass");
 		// Night.
-		if (this.state.date > this.state.SunCalc.nauticalDusk && this.state.date <= this.state.SunCalc.nauticalDawn) {
+		if (this.state.date > this.state.SunCalc.nauticalDusk || this.state.date <= this.state.SunCalc.nauticalDawn) {
 			hourglass.className = "night_theme";
 		}
 		// Twilight (morning).

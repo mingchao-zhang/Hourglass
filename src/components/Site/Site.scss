@@ -1,5 +1,14 @@
 @import "../../Hourglass.scss";
 
+@keyframes fade_in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 // Timeline and events.
 $min_half_width: max(0.15rem, $border_radius);
 
@@ -12,6 +21,8 @@ $min_half_width: max(0.15rem, $border_radius);
 		padding-bottom: 0.5rem;
 		display: flex;
 		justify-content: space-between;
+
+		animation: fade_in 1s;
 
 		// URL.
 		.url{}
@@ -42,6 +53,8 @@ $min_half_width: max(0.15rem, $border_radius);
 				margin-left: -$min_half_width;
 				border-radius: $border_radius;
 				padding: 0 $min_half_width;
+
+				animation: fade_in 1s;
 			}
 		}
 	}
