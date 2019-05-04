@@ -168,15 +168,16 @@ class Hourglass extends Component {
 	componentDidMount() {
 		let date = new Date();
 		setTimeout(() => {
-			setInterval(this.dateKeeper, 1000);
+			this.updateTheme();
 			this.dateKeeper();
+			setInterval(this.dateKeeper, 1000);
+			setInterval(this.updateTheme, 1000);
 		}, (999 - date.getMilliseconds()));
 		this.calculateTimeline();
 		date = new Date();
 		setTimeout(() => {
-			setInterval(this.updateTheme, 60000);
+			
 			setInterval(this.calculateTimeline, 60000);
-			this.updateTheme();
 			this.calculateTimeline();
 		}, (59 - date.getSeconds())*1000 + (999 - date.getMilliseconds()));
 		browser.storage.onChanged.addListener((changes, areaName) => {

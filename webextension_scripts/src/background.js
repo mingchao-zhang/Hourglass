@@ -6,16 +6,20 @@ import db from "./database.js";
 */
 navigator.geolocation.getCurrentPosition(position => {
 	browser.storage.local.set({
-		latitude: position.latitude,
-		longitude: position.longitude
+		latitude: position.coords.latitude,
+		longitude: position.coords.longitude
 	})
 });
 navigator.geolocation.watchPosition(position => {
 	browser.storage.local.set({
-		latitude: position.latitude,
-		longitude: position.longitude
+		latitude: position.coords.latitude,
+		longitude: position.coords.longitude
 	})
 });
+
+/*
+	Notifications once every 30 minutes.
+*/
 
 /*
 	User browsing history is saved in a Timeline, a collection of Events.
