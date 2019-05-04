@@ -1,1 +1,1 @@
-C:/Users/Kevin/Downloads/Projects/Hourglass/hourglass/webextension_scripts/src/database.js
+../webextension_scripts/src/database.js
