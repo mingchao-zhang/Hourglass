@@ -1,27 +1,11 @@
 {
-	// Required.
+
 	"manifest_version": 2,
 	"name": "Hourglass",
 	"version": "2019.4.27",
 
-	// Additional information.
-	//"icons": {},
-	//"description": "",
-	//"developer": {
-	//	"name": "",
-	//	"url": ""
-	//},
-
-	// Browser specific settings.
-	//"browser_specific_settings": {
-	// Require Firefox 67 for "incognito": "not_allowed".
-	//	"gecko": {
-	//		"strict_min_version": "67.*"
-	//	}
-	//},
-
-	// Incognito and permissions.
-	//"incognito": "not_allowed",
+	"options_page": "options.html",
+	
 	"permissions" : [
 		"alarms",
 		"geolocation",
@@ -32,21 +16,15 @@
 		"unlimitedStorage"
 	],
 
-	// Options page.
-	//"options_page": "options.html",
-
-	// Scripts.
 	"background": {
 		"scripts": [
 			"background.js"
 		]
 	},
 
-	// Actions.
-	//"browser_action": {},
-
-	// URL overrides.
 	"chrome_url_overrides": {
 		"newtab": "index.html"
-	}
+	},
+	
+	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
 }
