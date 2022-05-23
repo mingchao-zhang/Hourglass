@@ -6,7 +6,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "dexie": "^2.0.4"
+    "dexie": "^3.2.2"
   },
   "devDependencies": {
     "webextension-polyfill": "^0.4.0",
